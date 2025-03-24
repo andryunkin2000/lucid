@@ -296,7 +296,7 @@ const FormulaInputClient = ({ initialFocused = false }) => {
       // Second pass: Process operators following order of operations
       const calculateOperation = (tags: ProcessedTag[]): number => {
         // First handle multiplication and division
-        let tempTags: ProcessedTag[] = [...tags];
+        const tempTags: ProcessedTag[] = [...tags];
         for (let i = 0; i < tempTags.length; i++) {
           if (tempTags[i].type === 'operator' && (tempTags[i].value === '*' || tempTags[i].value === '/')) {
             const prev = Number(tempTags[i - 1].value);
@@ -422,7 +422,6 @@ const FormulaInputClient = ({ initialFocused = false }) => {
                           onCompositionEnd={() => setIsComposing(false)}
                           placeholder={isFocused ? "Enter a formula" : ""}
                           aria-label="Formula input"
-                          aria-expanded={showSuggestions}
                           aria-controls="suggestions-list"
                           aria-activedescendant={
                             showSuggestions && suggestions[selectedIndex]
@@ -446,7 +445,6 @@ const FormulaInputClient = ({ initialFocused = false }) => {
                       <TagComponent 
                         tag={tag} 
                         onUpdate={updateTag}
-                        nextTag={index < tags.length - 1 ? tags[index + 1] : null}
                       />
                     </span>
                   </React.Fragment>
@@ -471,7 +469,6 @@ const FormulaInputClient = ({ initialFocused = false }) => {
                       onCompositionEnd={() => setIsComposing(false)}
                       placeholder={isFocused ? "Enter a formula" : ""}
                       aria-label="Formula input"
-                      aria-expanded={showSuggestions}
                       aria-controls="suggestions-list"
                       aria-activedescendant={
                         showSuggestions && suggestions[selectedIndex]
@@ -648,12 +645,10 @@ export const FormulaInput = FormulaInputClient;
 
 function TagComponent({ 
   tag, 
-  onUpdate,
-  nextTag
+  onUpdate
 }: { 
   tag: Tag; 
   onUpdate: (id: string, updates: Partial<Tag>) => void;
-  nextTag: Tag | null;
 }) {
   const options = ['Value', 'Percentage', 'Growth'];
   

@@ -10,6 +10,14 @@ export interface AutocompleteSuggestion {
   inputs?: string;
 }
 
+// Define interface for the API response data
+interface ApiSuggestion {
+  id: string;
+  name: string;
+  value?: string | number;
+  inputs?: string;
+}
+
 const API_URL = 'https://652f91320b8d8ddac0b2b62b.mockapi.io/autocomplete';
 
 async function fetchSuggestions(query: string): Promise<AutocompleteSuggestion[]> {
@@ -18,15 +26,15 @@ async function fetchSuggestions(query: string): Promise<AutocompleteSuggestion[]
     throw new Error('Failed to fetch suggestions');
   }
   
-  const apiData = await response.json();
+  const apiData: ApiSuggestion[] = await response.json();
   
   // Transform API data to match our interface
   return apiData
-    .filter((item: any) => 
+    .filter((item) => 
       item.name.toLowerCase().includes(query.toLowerCase()) ||
       (item.inputs && item.inputs.toLowerCase().includes(query.toLowerCase()))
     )
-    .map((item: any) => ({
+    .map((item) => ({
       id: item.id,
       name: item.name,
       value: item.value !== undefined ? item.value : undefined,
