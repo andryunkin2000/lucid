@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect, KeyboardEvent } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
-import { ChevronDownIcon, XMarkIcon, PlusIcon } from '@heroicons/react/20/solid';
+import { ChevronDownIcon, XMarkIcon } from '@heroicons/react/20/solid';
 import { PlusIcon as PlusIconOutline } from '@heroicons/react/24/outline';
 import classNames from 'classnames';
 import { useFormulaStore, Tag } from '../../store/formulaStore';
